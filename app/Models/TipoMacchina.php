@@ -10,4 +10,6 @@ class TipoMacchina extends Model
     use HasFactory;
 
     protected $table = 'tipo_macchina';
+
+    protected $fillable = ['codice', 'descrizione'];
 }

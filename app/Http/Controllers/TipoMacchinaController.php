@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoMacchina;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TipoMacchinaController extends Controller
@@ -16,13 +17,9 @@ class TipoMacchinaController extends Controller
         return view('tipomacchina', [ 'data'=>$tipoMaccina ]);
     }
 
-    public function create() {
-        return view('tipomacchinacreate');
-    }
-
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return JsonResponse
      */
     public function store(Request $request) {
         $request->validate([
@@ -40,14 +37,11 @@ class TipoMacchinaController extends Controller
             $tipoMacchina->descrizione = $descrizione;
 
             $tipoMacchina->save();
-
-            $request->session()->flash('status', 'Tipo Macchina aggiunto con successo');
         } catch (\Exception $e) {
-            $request->session()->flash('error', $e->errorInfo[2]);
-            return redirect()->back();
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
 
-        return redirect()->route('tipomacchina.show');
+        return new JsonResponse(['success' => '1']);
     }
 
     /**
