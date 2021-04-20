@@ -22,6 +22,9 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
-        "font-awesome": "^4.7.0"
+        "backbone": "^1.4.0",
+        "font-awesome": "^4.7.0",
+        "marionette": "^5.0.0-alpha.2",
+        "underscore": "^1.13.1"
     }
 }
