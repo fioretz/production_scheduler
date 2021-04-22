@@ -37,6 +37,33 @@ class TipoMacchinaController extends Controller
             $tipoMacchina->descrizione = $descrizione;
 
             $tipoMacchina->save();
+
+            request()->session()->flash('status', 'Tipo Macchina inserito correttamente');
+        } catch (\Exception $e) {
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Request $request) {
+        request()->validate([
+            'codice' => 'required|min:3',
+            'descrizione' => 'required'
+        ]);
+
+        try {
+            $id = request()->input('id');
+            $tipoMacchina = TipoMacchina::findOrFail($id);
+            $tipoMacchina->codice = request()->input('codice');
+            $tipoMacchina->descrizione = request()->input('descrizione');
+
+            $tipoMacchina->update();
+            request()->session()->flash('status', 'Tipo Macchina modificato correttamente');
         } catch (\Exception $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
@@ -55,29 +82,12 @@ class TipoMacchinaController extends Controller
     }
 
     /**
-     * @param $tipoMacchinaId
-     * @return \Illuminate\Http\RedirectResponse
+     * @param $id
+     * @return JsonResponse
      */
-    public function update($tipoMacchinaId) {
-        request()->validate([
-            'codice' => 'required|min:3',
-            'descrizione' => 'required'
-        ]);
-
-        try {
-            $tipoMacchina = TipoMacchina::findOrFail($tipoMacchinaId);
-            $tipoMacchina->codice = request()->input('codice');
-            $tipoMacchina->descrizione = request()->input('descrizione');
-
-            $tipoMacchina->update();
-
-            request()->session()->flash('status', 'Tipo Macchina modificato correttamente');
-        } catch (\Exception $e) {
-            request()->session()->flash('error', $e->errorInfo[2]);
-            return redirect()->back();
-        }
-
-        return redirect()->route('tipomacchina.show');
+    public function getTipoMacchinaById($id) {
+        $tipoMacchina = TipoMacchina::find($id);
+        return response()->json($tipoMacchina);
     }
 
     /**
