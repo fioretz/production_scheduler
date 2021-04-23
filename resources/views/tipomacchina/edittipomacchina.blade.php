@@ -13,7 +13,7 @@
                     <div id="editErrorLabel" class="alert alert-danger" style="display: none" role="alert">
                     </div>
                     @csrf
-                    <input type="hidden" id="id" name="id" />
+                    <input type="hidden" id="editId" name="editId" />
                     <div class="row form-group">
                         <div class="col-12">
                             <label for="editCodice">Codice: </label>
@@ -46,7 +46,7 @@
     function editTipoMacchina(id)
     {
         $.get('/tipomacchina/'+id, function(tipomacchina) {
-            $('#id').val(tipomacchina.id);
+            $('#editId').val(tipomacchina.id);
             $('#editCodice').val(tipomacchina.codice);
             $('#editDescrizione').val(tipomacchina.descrizione);
             $('#editTipoMacchinaModal').modal('toggle');
@@ -56,7 +56,7 @@
     $("#editTipoMacchinaForm").submit(function(e){
         e.preventDefault();
 
-        let id = $("#id").val();
+        let id = $("#editId").val();
         let codice = $("#editCodice").val();
         let descrizione = $("#editDescrizione").val();
         let _token = $("input[name=_token]").val();
@@ -90,4 +90,10 @@
             }
         })
     });
+
+    $("#editTipoMacchinaModal").on('hidden.bs.modal', function () {
+        $("#edit-codice-error").html("");
+        $("#edit-descrizione-error").html("");
+        $('#editErrorLabel').fadeOut();
+    })
 </script>
