@@ -1,6 +1,11 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/images/sort_asc.png": "/images/sort_asc.png",
+    "/images/sort_asc_disabled.png": "/images/sort_asc_disabled.png",
+    "/images/sort_both.png": "/images/sort_both.png",
+    "/images/sort_desc.png": "/images/sort_desc.png",
+    "/images/sort_desc_disabled.png": "/images/sort_desc_disabled.png",
     "/js/scripts.js": "/js/scripts.js",
     "/css/bootstrap.css": "/css/bootstrap.css"
 }

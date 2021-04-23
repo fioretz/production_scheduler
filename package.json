@@ -23,6 +23,9 @@
     },
     "dependencies": {
         "backbone": "^1.4.0",
+        "datatables.net": "^1.10.24",
+        "datatables.net-bs4": "^1.10.24",
+        "datatables.net-dt": "^1.10.24",
         "font-awesome": "^4.7.0",
         "marionette": "^5.0.0-alpha.2",
         "underscore": "^1.13.1"
