@@ -12,9 +12,10 @@ class TipoMacchinaController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show() {
-        $tipoMaccina = TipoMacchina::paginate(request('perPage', 5));
+        $tipoMacchina = TipoMacchina::all();
+//        $tipoMaccina = TipoMacchina::paginate(request('perPage', 5));
 
-        return view('tipomacchina', [ 'data'=>$tipoMaccina ]);
+        return view('tipomacchina.tipomacchina', [ 'data'=>$tipoMacchina ]);
     }
 
     /**
@@ -73,26 +74,7 @@ class TipoMacchinaController extends Controller
 
     /**
      * @param $tipoMacchinaId
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function edit($tipoMacchinaId) {
-        $tipoMacchina = TipoMacchina::findOrFail($tipoMacchinaId);
-
-        return view('tipomacchinaedit', [ 'tipomacchina'=>$tipoMacchina ]);
-    }
-
-    /**
-     * @param $id
-     * @return JsonResponse
-     */
-    public function getTipoMacchinaById($id) {
-        $tipoMacchina = TipoMacchina::find($id);
-        return response()->json($tipoMacchina);
-    }
-
-    /**
-     * @param $tipoMacchinaId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function delete($tipoMacchinaId) {
         try {
@@ -102,10 +84,18 @@ class TipoMacchinaController extends Controller
 
             request()->session()->flash('status', 'Tipo Macchina eliminato correttamente');
         } catch (\Exception $e) {
-            request()->session()->flash('error', $e->errorInfo[2]);
-            return redirect()->back();
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
 
-        return redirect()->back();
+        return new JsonResponse(['success' => '1']);return redirect()->back();
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getTipoMacchinaById($id) {
+        $tipoMacchina = TipoMacchina::find($id);
+        return response()->json($tipoMacchina);
     }
 }

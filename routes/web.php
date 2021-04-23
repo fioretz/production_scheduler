@@ -18,9 +18,8 @@ Route::get('/', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index
 Route::get('/tipomacchina', ['uses' => 'TipoMacchinaController@show', 'as' => 'tipomacchina.show']);
 Route::get('/tipomacchina/{id}', ['uses' => 'TipoMacchinaController@getTipoMacchinaById', 'as' => 'tipomacchina.getTipoMacchinaById']);
 Route::post('/tipomacchina/store', ['uses' => 'TipoMacchinaController@store', 'as' => 'tipomacchina.store']);
-Route::get('/tipomacchina/{tipomacchina}/edit', ['uses' => 'TipoMacchinaController@edit', 'as' => 'tipomacchina.edit']);
 Route::post('/tipomacchina/update', ['uses' => 'TipoMacchinaController@update', 'as' => 'tipomacchina.update']);
-Route::get('/tipomacchina/{tipomacchina}/delete', ['uses' => 'TipoMacchinaController@delete', 'as' => 'tipomacchina.delete']);
+Route::post('/tipomacchina/{id}/delete', ['uses' => 'TipoMacchinaController@delete', 'as' => 'tipomacchina.delete']);
 
 Auth::routes();
 
