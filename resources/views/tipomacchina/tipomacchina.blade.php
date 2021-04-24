@@ -3,7 +3,7 @@
     Tipo Macchina
 @endsection
 @section('content')
-    <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 mt-5 border-bottom">
         <h2>Tipo Macchina</h2>
     </div>
 
@@ -23,7 +23,7 @@
                 <input type="text" id="col2_filter" class="form-control column-filter" placeholder="Codice">
             </div>
             <div class="col-3" data-column="3">
-                <label for="col3_filter">Codice:</label>
+                <label for="col3_filter">Descrizione:</label>
                 <input type="text" id="col3_filter" class="form-control column-filter" placeholder="Descrizione">
             </div>
         </div>

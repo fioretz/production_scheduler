@@ -3,5 +3,7 @@
     Home
 @endsection
 @section('content')
-    <p>Progetto Schedulatore Produzione Info3</p>
+    <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 mt-5 border-bottom">
+        <h2>Progetto Schedulatore Produzione Info3</h2>
+    </div>
 @endsection
