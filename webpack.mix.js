@@ -17,8 +17,8 @@ mix.js('resources/js/app.js', 'public/js')
     .copy('node_modules/datatables.net-dt/images', 'public/images')
     .scripts([
         'node_modules/underscore/underscore.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/jquery/dist/jquery.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/backbone/backbone.js',
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',

@@ -81,6 +81,6 @@
     $("#createTipoMacchinaModal").on('hidden.bs.modal', function () {
         $("#create-codice-error").html("");
         $("#create-descrizione-error").html("");
-        $('#createErrorLabel').fadeOut();
+        $("#createErrorLabel").fadeOut();
     })
 </script>
