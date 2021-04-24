@@ -13,7 +13,6 @@ class TipoMacchinaController extends Controller
      */
     public function show() {
         $tipoMacchina = TipoMacchina::all();
-//        $tipoMaccina = TipoMacchina::paginate(request('perPage', 5));
 
         return view('tipomacchina.tipomacchina', [ 'data'=>$tipoMacchina ]);
     }

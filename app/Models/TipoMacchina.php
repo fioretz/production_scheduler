@@ -11,5 +11,7 @@ class TipoMacchina extends Model
 
     protected $table = 'tipo_macchina';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = ['codice', 'descrizione'];
 }
