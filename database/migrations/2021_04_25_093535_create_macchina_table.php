@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoMacchinaTable extends Migration
+class CreateMacchinaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTipoMacchinaTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_macchina', function (Blueprint $table) {
+        Schema::create('macchina', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codice');
+            $table->string('codice')->unique();
             $table->string('descrizione');
+            $table->unsignedBigInteger('tipomacchina_id');
+            $table->foreign('tipomacchina_id')->references('id')->on('tipo_macchina');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateTipoMacchinaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_macchina');
+        Schema::dropIfExists('macchina');
     }
 }
