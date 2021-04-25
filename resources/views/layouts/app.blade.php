@@ -15,26 +15,27 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <a class="navbar-brand" href="{{ route('dashboard.index') }}">Production Scheduler</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tipomacchina.show') }}">Tipo Macchina</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav my-2 my-lg-0">
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="#">Sign out</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-inverse" style="padding: 0">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}" style="color: #fff">
+                    <img alt="Production Scheduler" src="{{ asset('images/logo_bianco.svg') }}" style="opacity: 0.7; height: 50px">
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tipomacchina.show') }}" style="padding: 18px 10px">Tipo Macchina</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav my-2 my-lg-0">
+                    <li class="nav-item text-nowrap">
+                        <a class="nav-link" href="#" style="padding: 18px 10px">Sign out</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-
     <div class="container-fluid">
         <div class="content">
             <main>

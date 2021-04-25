@@ -3,7 +3,5 @@
     Home
 @endsection
 @section('content')
-    <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 mt-5 border-bottom">
-        <h2>Progetto Schedulatore Produzione Info3</h2>
-    </div>
+    <div style="text-align: center; margin-top: 200px;"><img alt="Production Scheduler" src="{{ asset('images/logo_intero.svg') }}" style="opacity: 0.7; width: 800px"></div>
 @endsection
