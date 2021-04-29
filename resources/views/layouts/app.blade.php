@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('tipomacchina.show') }}" style="padding: 18px 10px">Tipo Macchina</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('macchina.show') }}" style="padding: 18px 10px">Macchine</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-0">
                     <li class="nav-item text-nowrap">
