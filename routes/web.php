@@ -21,6 +21,8 @@ Route::post('/tipomacchina/store', ['uses' => 'TipoMacchinaController@store', 'a
 Route::post('/tipomacchina/update', ['uses' => 'TipoMacchinaController@update', 'as' => 'tipomacchina.update']);
 Route::post('/tipomacchina/{id}/delete', ['uses' => 'TipoMacchinaController@delete', 'as' => 'tipomacchina.delete']);
 
+Route::get('/macchina', ['uses' => 'MacchinaController@show', 'as' => 'macchina.show']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
