@@ -34,3 +34,16 @@ body {
     color: #fff;
     background-color: #123a6c;
 }
+
+.btn-primary {
+    background-color: #224e7f !important;
+    border-color: #224e7f !important;
+}
+
+.page-item.active .page-link {
+    background-color: #224e7f !important;
+}
+
+.border {
+    border: 1px solid #ced4da !important;
+}

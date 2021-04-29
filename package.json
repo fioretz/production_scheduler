@@ -15,7 +15,6 @@
         "jquery": "^3.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "popper.js": "^1.12",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^3.1.2",
         "sass": "^1.15.2",
@@ -23,11 +22,13 @@
     },
     "dependencies": {
         "backbone": "^1.4.0",
+        "bootstrap-select": "^1.13.18",
         "datatables.net": "^1.10.24",
         "datatables.net-bs4": "^1.10.24",
         "datatables.net-dt": "^1.10.24",
         "font-awesome": "^4.7.0",
         "marionette": "^5.0.0-alpha.2",
+        "popper.js": "^1.11.0",
         "underscore": "^1.13.1"
     }
 }
