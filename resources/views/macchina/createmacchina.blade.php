@@ -35,7 +35,7 @@
                         <div class="col-12">
                             <label for="createTipoMacchina">Tipo Macchina: </label>
                             <select id="createTipoMacchina" class="selectpicker show-tick form-control border" data-live-search="true" data-style="btn-white">
-                                <option value="">Mostra Tutto</option>
+                                <option value="" selected="selected"></option>
                                 @foreach($tipomacchina as $row)
                                     <option value="{{ $row->id }}">{{ $row->codice }} - {{ $row->descrizione }}</option>
                                 @endforeach
