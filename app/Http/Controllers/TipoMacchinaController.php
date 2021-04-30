@@ -73,7 +73,7 @@ class TipoMacchinaController extends Controller
 
     /**
      * @param $tipoMacchinaId
-     * @return JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return JsonResponse
      */
     public function delete($tipoMacchinaId) {
         try {
@@ -86,7 +86,7 @@ class TipoMacchinaController extends Controller
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
 
-        return new JsonResponse(['success' => '1']);return redirect()->back();
+        return new JsonResponse(['success' => '1']);
     }
 
     /**
