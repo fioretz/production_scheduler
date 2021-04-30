@@ -22,6 +22,10 @@ Route::post('/tipomacchina/update', ['uses' => 'TipoMacchinaController@update', 
 Route::post('/tipomacchina/{id}/delete', ['uses' => 'TipoMacchinaController@delete', 'as' => 'tipomacchina.delete']);
 
 Route::get('/macchina', ['uses' => 'MacchinaController@show', 'as' => 'macchina.show']);
+Route::get('/macchina/{id}', ['uses' => 'MacchinaController@getMacchinaById', 'as' => 'macchina.getMacchinaById']);
+Route::post('/macchina/store', ['uses' => 'MacchinaController@store', 'as' => 'macchina.store']);
+Route::post('/macchina/update', ['uses' => 'MacchinaController@update', 'as' => 'macchina.update']);
+Route::post('/macchina/{id}/delete', ['uses' => 'MacchinaController@delete', 'as' => 'macchina.delete']);
 
 Auth::routes();
 
