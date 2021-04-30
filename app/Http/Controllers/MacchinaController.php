@@ -79,9 +79,9 @@ class MacchinaController extends Controller
             $macchina = Macchina::findOrFail($id);
             $macchina->codice = request()->input('codice');
             $macchina->descrizione = request()->input('descrizione');
-            $macchina->tipomacchina_id = request()->input('tipomacchina_id');
+            $macchina->tipomacchina_id = intval(request()->input('tipomacchina_id'));
 
-            $macchina->upddate();
+            $macchina->update();
 
             request()->session()->flash('status', 'Macchina modificata correttamente');
         } catch (\Exception $e) {
@@ -118,6 +118,6 @@ class MacchinaController extends Controller
 
         $tipoMacchina = TipoMacchina::find($macchina->tipomacchina_id);
 
-        return new JsonResponse(['macchina' => $macchina, 'tipomacchina' => $tipoMacchina]);
+        return new JsonResponse(['macchina' => $macchina, 'tipomacchinaselected' => $tipoMacchina]);
     }
 }
