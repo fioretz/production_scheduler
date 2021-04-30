@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoMacchina;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -82,8 +83,10 @@ class TipoMacchinaController extends Controller
             $tipoMacchina->delete();
 
             request()->session()->flash('status', 'Tipo Macchina eliminato correttamente');
-        } catch (\Exception $e) {
+        } catch (QueryException $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            request()->session()->flash('deleteError', $e->getMessage());
         }
 
         return new JsonResponse(['success' => '1']);
