@@ -1,4 +1,4 @@
-{{-- Edit Tipo Macchina --}}
+{{-- Edit Macchina --}}
 <div class="modal fade" id="editMacchinaModal" tabindex="-1" aria-labelledby="editMacchinaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

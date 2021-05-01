@@ -1,4 +1,4 @@
-{{-- Create Tipo Macchina --}}
+{{-- Create Macchina --}}
 <div class="modal fade" id="createMacchinaModal" tabindex="-1" aria-labelledby="createMacchinaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

@@ -1,4 +1,4 @@
-{{-- Delete Tipo Macchina --}}
+{{-- Delete Macchina --}}
 <div class="modal fade" id="deleteMacchinaModal" tabindex="-1" aria-labelledby="deleteMacchinaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
