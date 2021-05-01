@@ -20,7 +20,6 @@ class TipoMacchina extends Model
     {
         parent::boot();
 
-
         static::deleting(function($tipoMacchina) {
 
             $macchina = DB::table('macchina')->where('tipomacchina_id', $tipoMacchina->id)->first();
@@ -29,6 +28,11 @@ class TipoMacchina extends Model
                 throw new \Exception(sprintf('Impossibile eliminare tipo macchina %s, tipo macchina assegnato ad una macchina attiva', $tipoMacchina->codice));
             }
 
+            $prodotto = DB::table('prodotto')->where('tipomacchina_id', $tipoMacchina->id)->first();
+
+            if (!empty($prodotto)) {
+                throw new \Exception(sprintf('Impossibile eliminare tipo macchina %s, tipo macchina assegnato ad un prodotto', $tipoMacchina->codice));
+            }
         });
     }
 }
