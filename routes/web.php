@@ -27,6 +27,12 @@ Route::post('/macchina/store', ['uses' => 'MacchinaController@store', 'as' => 'm
 Route::post('/macchina/update', ['uses' => 'MacchinaController@update', 'as' => 'macchina.update']);
 Route::post('/macchina/{id}/delete', ['uses' => 'MacchinaController@delete', 'as' => 'macchina.delete']);
 
+Route::get('/prodotto', ['uses' => 'ProdottoController@show', 'as' => 'prodotto.show']);
+Route::get('/prodotto/{id}', ['uses' => 'ProdottoController@getProdottoById', 'as' => 'prodotto.getProdottoById']);
+Route::post('/prodotto/store', ['uses' => 'ProdottoController@store', 'as' => 'prodotto.store']);
+Route::post('/prodotto/update', ['uses' => 'ProdottoController@update', 'as' => 'prodotto.update']);
+Route::post('/prodotto/{id}/delete', ['uses' => 'ProdottoController@delete', 'as' => 'prodotto.delete']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
