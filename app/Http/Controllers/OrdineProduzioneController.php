@@ -26,6 +26,7 @@ class OrdineProduzioneController extends Controller
                 'prodotto.codice AS prodotto_codice',
                 'prodotto.descrizione AS prodotto_descrizione',
             )
+            ->where('stato', '!=', OrdineProduzione::STATO_CHIUSO)
             ->get();
 
         foreach ($ordiniProduzione->all() as $ordine) {
