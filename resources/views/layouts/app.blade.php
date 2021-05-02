@@ -33,6 +33,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('tipomacchina.show') }}" style="padding: 18px 10px">Tipo Macchina</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 18px 10px">
+                            Ordini di Produzione
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('ordineproduzione.show') }}">Ordini di Produzione</a>
+                            <a class="dropdown-item" href="{{ route('macchina.show') }}">Chiudi Ordine in Produzione</a>
+                            <a class="dropdown-item" href="{{ route('tipomacchina.show') }}">Ordini di Produzione chiusi</a>
+                        </div>
+                    </li>
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-0">
                     <li class="nav-item text-nowrap">
