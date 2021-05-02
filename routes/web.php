@@ -33,6 +33,10 @@ Route::post('/prodotto/store', ['uses' => 'ProdottoController@store', 'as' => 'p
 Route::post('/prodotto/update', ['uses' => 'ProdottoController@update', 'as' => 'prodotto.update']);
 Route::post('/prodotto/{id}/delete', ['uses' => 'ProdottoController@delete', 'as' => 'prodotto.delete']);
 
+Route::get('/ordineproduzione', ['uses' => 'OrdineProduzioneController@show', 'as' => 'ordineproduzione.show']);
+//Route::get('/prodotto/{id}', ['uses' => 'ProdottoController@getProdottoById', 'as' => 'prodotto.getProdottoById']);
+Route::post('/ordineproduzione/store', ['uses' => 'OrdineProduzioneController@store', 'as' => 'ordineproduzione.store']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

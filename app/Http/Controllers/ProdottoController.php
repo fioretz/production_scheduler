@@ -7,7 +7,6 @@ use App\Models\TipoMacchina;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ProdottoController extends Controller
