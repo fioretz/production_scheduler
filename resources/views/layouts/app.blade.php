@@ -38,9 +38,9 @@
                             Ordini di Produzione
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('ordineproduzione.show') }}">Ordini di Produzione</a>
-                            <a class="dropdown-item" href="{{ route('macchina.show') }}">Chiudi Ordine in Produzione</a>
-                            <a class="dropdown-item" href="{{ route('tipomacchina.show') }}">Ordini di Produzione chiusi</a>
+                            <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.show') }}">Ordini di Produzione</a>
+                            <a class="dropdown-item item-menu" href="{{ route('macchina.show') }}">Chiudi Ordine in Produzione</a>
+                            <a class="dropdown-item item-menu" href="{{ route('tipomacchina.show') }}">Ordini di Produzione chiusi</a>
                         </div>
                     </li>
                 </ul>

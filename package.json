@@ -14,6 +14,8 @@
         "bootstrap": "^4.0.0",
         "jquery": "^3.2",
         "laravel-mix": "^6.0.6",
+        "less": "^4.1.1",
+        "less-loader": "^8.1.1",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^3.1.2",
@@ -21,13 +23,16 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
-        "backbone": "^1.4.0",
+        "backbone": "^1.npm 4.0",
+        "bootstrap-datepicker": "^1.9.0",
         "bootstrap-select": "^1.13.18",
         "datatables.net": "^1.10.24",
         "datatables.net-bs4": "^1.10.24",
         "datatables.net-dt": "^1.10.24",
         "font-awesome": "^4.7.0",
+        "glyphicons": "^0.2.0",
         "marionette": "^5.0.0-alpha.2",
+        "moment": "^2.26.0",
         "popper.js": "^1.11.0",
         "underscore": "^1.13.1"
     }
