@@ -57,8 +57,8 @@
                 <tr id="sid{{ $row->id }}">
                     <td hidden></td>
                     <td style="vertical-align: middle">
-                        <a href="javascript:void(0)" onclick="editProdotto({{ $row->id }})" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                        @if ($row->stato == 'A') <a href="javascript:void(0)" onclick="deleteProdotto({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> @endif
+                        <a href="javascript:void(0)" onclick="editOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                        @if ($row->stato == 'A') <a href="javascript:void(0)" onclick="deleteOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> @endif
                     </td>
                     <td style="vertical-align: middle">{{ $row->numeroordine }}</td>
                     <td style="vertical-align: middle">{{ $row->prodotto_codice }}- {{ $row->prodotto_descrizione }}</td>
