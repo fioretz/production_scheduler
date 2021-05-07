@@ -38,6 +38,7 @@ Route::get('/ordineproduzione/ultimonumeroordine', ['uses' => 'OrdineProduzioneC
 Route::post('/ordineproduzione/tempoproduzione', ['uses' => 'OrdineProduzioneController@getTempoProduzioneByProdottoIdAndQuantita', 'as' => 'ordineproduzione.getTempoProduzioneByProdottoIdAndQuantita']);
 //Route::get('/prodotto/{id}', ['uses' => 'ProdottoController@getProdottoById', 'as' => 'prodotto.getProdottoById']);
 Route::post('/ordineproduzione/store', ['uses' => 'OrdineProduzioneController@store', 'as' => 'ordineproduzione.store']);
+Route::post('/ordineproduzione/{id}/delete', ['uses' => 'OrdineProduzioneController@delete', 'as' => 'ordineproduzione.delete']);
 
 Auth::routes();
 
