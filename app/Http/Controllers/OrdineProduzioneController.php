@@ -27,6 +27,7 @@ class OrdineProduzioneController extends Controller
                 'prodotto.descrizione AS prodotto_descrizione',
             )
             ->where('stato', '!=', OrdineProduzione::STATO_CHIUSO)
+            ->orderBy('datascadenza', 'asc')
             ->get();
 
         foreach ($ordiniProduzione->all() as $ordine) {
@@ -83,6 +84,33 @@ class OrdineProduzioneController extends Controller
         }
 
         return new JsonResponse(['success' => '1']);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    protected function getUltimoNumeroProduzione() {
+        $numeroOrdineMax = OrdineProduzione::max('numeroordine');
+
+        $nuovoNumeroOrdine = $numeroOrdineMax + 1;
+
+        return response()->json($nuovoNumeroOrdine);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    protected function getTempoProduzioneByProdottoIdAndQuantita(Request $request)
+    {
+        $prodottoId = $request['prodotto_id'];
+        $quantita = $request['quantita'];
+
+        $prodotto = Prodotto::findOrFail($prodottoId);
+        $tempoProduzione = $prodotto->tempounitarioproduzione * $quantita;
+        $tempoProduzione = $this->getOreMinutiSecondiFromSecondi($tempoProduzione);
+
+        return response()->json($tempoProduzione);
     }
 
     /**
