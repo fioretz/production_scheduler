@@ -49,7 +49,7 @@
                 <th>Tempo Produzione</th>
                 <th>Data Scadenza</th>
                 <th>Data Fine</th>
-                <th>Stato</th>
+                <th class="text-center">Stato</th>
             </tr>
             </thead>
             <tbody>
@@ -66,7 +66,7 @@
                     <td style="vertical-align: middle">{{ $row->ore }} h {{ $row->minuti }} m {{ $row->secondi }} s</td>
                     <td style="vertical-align: middle">@if (!empty($row->datascadenza)) {{ date('d/m/Y', strtotime($row->datascadenza)) }} @endif</td>
                     <td style="vertical-align: middle">@if (!empty($row->datafine)) {{ date('d/m/Y', strtotime($row->datafine)) }} @endif</td>
-                    <td style="vertical-align: middle">{{ $row->stato }}</td>
+                    <td class="text-center" style="vertical-align: middle">{{ $row->stato }}</td>
                 </tr>
             @endforeach
             </tbody>
