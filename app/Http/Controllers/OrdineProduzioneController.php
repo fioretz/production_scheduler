@@ -87,6 +87,44 @@ class OrdineProduzioneController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function update(Request $request) {
+        request()->validate([
+            'quantita' => 'required|min:1',
+            'datascadenza' => 'required',
+            'prodotto_id' => 'required|exists:prodotto,id'
+        ]);
+
+        try {
+            $id = request()->input('id');
+            $ordineProduzione = OrdineProduzione::findOrFail($id);
+            $ordineProduzione->datascadenza = request()->input('datascadenza');
+            $ordineProduzione->prodotto_id = request()->input('prodotto_id');
+            $ordineProduzione->quantita = request()->input('quantita');
+
+            $prodotto = Prodotto::find(request()->input('prodotto_id'));
+            if (empty($prodotto)) {
+                throw new \Exception('Prodotto non trovato');
+            }
+            $tempoProduzione = $prodotto->tempounitarioproduzione * (request()->input('quantita'));
+            $ordineProduzione->tempoproduzione = $tempoProduzione;
+
+            $ordineProduzione->update();
+
+            request()->session()->flash('status', 'Ordine di Produzione modificato correttamente');
+        } catch (QueryException $e) {
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            dump($e->getMessage());die;
+            return new JsonResponse(['errors' => $e->getMessage()]);
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
+
+    /**
      * @param $prodottoId
      * @return JsonResponse
      */
@@ -104,6 +142,21 @@ class OrdineProduzioneController extends Controller
         }
 
         return new JsonResponse(['success' => '1']);
+    }
+
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
+    public function getOrdineProduzioneById($id) {
+        $ordineProduzione = OrdineProduzione::find($id);
+
+        $oreMinutiSecondi = $this->getOreMinutiSecondiFromSecondi($ordineProduzione->getAttribute('tempoproduzione'));
+        $ordineProduzione->ore = $oreMinutiSecondi['ore'];
+        $ordineProduzione->minuti = $oreMinutiSecondi['minuti'];
+        $ordineProduzione->secondi = $oreMinutiSecondi['secondi'];
+
+        return response()->json($ordineProduzione);
     }
 
     /**
