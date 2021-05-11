@@ -12,12 +12,14 @@ const mix = require('laravel-mix');
  */
 
 mix.js([
+        'node_modules/underscore/underscore-min.js',
         'node_modules/popper.js/dist/umd/popper.js',
     ], 'public/js/app.js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps()
     .copy('node_modules/datatables.net-dt/images', 'public/images')
     .scripts([
+        'node_modules/underscore/underscore-min.js',
         'node_modules/popper.js/dist/umd/popper.js',
         'node_modules/jquery/dist/jquery.js',
         'node_modules/bootstrap-select/dist/js/bootstrap-select.min.js',
