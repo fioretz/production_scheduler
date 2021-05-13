@@ -28,11 +28,13 @@ class OrdineProduzione extends Model
                 throw new \Exception(sprintf('Impossibile modificare Numero Ordine'));
             }
 
-            if ($ordineProduzione->stato == self::STATO_CHIUSO) {
+            $statoOld = $ordineProduzione->getOriginal('stato');
+            $statoNew = $ordineProduzione->getAttribute('stato');
+            if ($statoOld == self::STATO_CHIUSO) {
                 throw new \Exception(sprintf('Impossibile modificare Ordini di Produzione chiusi'));
             }
 
-            if ($ordineProduzione->stato == self::STATO_IN_PRODUZIONE) {
+            if ($statoOld == self::STATO_IN_PRODUZIONE && !($statoOld == self::STATO_IN_PRODUZIONE && $statoNew == self::STATO_CHIUSO)) {
                 throw new \Exception(sprintf('Impossibile modificare Ordini di Produzione in fase di produzione'));
             }
 

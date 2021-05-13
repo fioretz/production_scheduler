@@ -126,7 +126,7 @@
 
     function editOrdineProduzione(id)
     {
-        $.get('/ordineproduzione/'+id, function(ordineProduzione) {
+        $.get('/ordineproduzione/getordineproduzionebyid/'+id, function(ordineProduzione) {
             $('#editId').val(ordineProduzione.id);
             $('#editNumeroOrdine').val(ordineProduzione.numeroordine);
             $('#editProdotto').val(ordineProduzione.prodotto_id);

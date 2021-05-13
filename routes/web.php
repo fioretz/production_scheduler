@@ -49,11 +49,14 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/ordineproduzione', ['uses' => 'OrdineProduzioneController@show', 'as' => 'ordineproduzione.show']);
     Route::get('/ordineproduzione/ultimonumeroordine', ['uses' => 'OrdineProduzioneController@getUltimoNumeroProduzione', 'as' => 'ordineproduzione.getUltimoNumeroProduzione']);
-    Route::get('/ordineproduzione/{id}', ['uses' => 'OrdineProduzioneController@getOrdineProduzioneById', 'as' => 'ordineproduzione.getOrdineProduzioneById']);
+    Route::get('/ordineproduzione/getordineproduzionebyid/{id}', ['uses' => 'OrdineProduzioneController@getOrdineProduzioneById', 'as' => 'ordineproduzione.getOrdineProduzioneById']);
     Route::post('/ordineproduzione/tempoproduzione', ['uses' => 'OrdineProduzioneController@getTempoProduzioneByProdottoIdAndQuantita', 'as' => 'ordineproduzione.getTempoProduzioneByProdottoIdAndQuantita']);
     Route::post('/ordineproduzione/store', ['uses' => 'OrdineProduzioneController@store', 'as' => 'ordineproduzione.store']);
     Route::post('/ordineproduzione/update', ['uses' => 'OrdineProduzioneController@update', 'as' => 'ordineproduzione.update']);
     Route::post('/ordineproduzione/{id}/delete', ['uses' => 'OrdineProduzioneController@delete', 'as' => 'ordineproduzione.delete']);
+    Route::get('/ordineproduzione/ordinichiusi', ['uses' => 'OrdineProduzioneController@showordinichiusi', 'as' => 'ordineproduzione.showordinichiusi']);
+    Route::get('/ordineproduzione/ordiniinproduzione', ['uses' => 'OrdineProduzioneController@showordiniinproduzione', 'as' => 'ordineproduzione.showordiniinproduzione']);
+    Route::get('/ordineproduzione/{id}/close', ['uses' => 'OrdineProduzioneController@close', 'as' => 'ordineproduzione.close']);
 });
 
 Auth::routes([

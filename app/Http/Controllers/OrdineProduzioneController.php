@@ -204,4 +204,95 @@ class OrdineProduzioneController extends Controller
 
         return $oreMinutiSecondi;
     }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showordinichiusi()
+    {
+        $ordiniProduzione = DB::table('ordine_produzione')
+            ->leftJoin('prodotto', 'ordine_produzione.prodotto_id', '=', 'prodotto.id')
+            ->select(
+                'ordine_produzione.id',
+                'ordine_produzione.numeroordine AS numeroordine',
+                'ordine_produzione.quantita AS ordineproduzione_quantita',
+                'ordine_produzione.tempoproduzione AS tempoproduzione',
+                'ordine_produzione.datascadenza AS datascadenza',
+                'ordine_produzione.datafine AS datafine',
+                'ordine_produzione.stato AS stato',
+                'ordine_produzione.prodotto_id',
+                'prodotto.codice AS prodotto_codice',
+                'prodotto.descrizione AS prodotto_descrizione',
+            )
+            ->where('stato', '=', OrdineProduzione::STATO_CHIUSO)
+            ->orderBy('datascadenza', 'asc')
+            ->get();
+
+        foreach ($ordiniProduzione->all() as $ordine) {
+            $oreMinutiSecondi = $this->getOreMinutiSecondiFromSecondi($ordine->tempoproduzione);
+            $ordine->ore = $oreMinutiSecondi['ore'];
+            $ordine->minuti = $oreMinutiSecondi['minuti'];
+            $ordine->secondi = $oreMinutiSecondi['secondi'];
+        }
+
+        $prodotti = Prodotto::all();
+
+        return view('ordineproduzione.ordineproduzionechiusi', [ 'ordiniproduzione'=>$ordiniProduzione, 'prodotti'=>$prodotti ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function showordiniinproduzione()
+    {
+        $ordiniProduzione = DB::table('ordine_produzione')
+            ->leftJoin('prodotto', 'ordine_produzione.prodotto_id', '=', 'prodotto.id')
+            ->select(
+                'ordine_produzione.id',
+                'ordine_produzione.numeroordine AS numeroordine',
+                'ordine_produzione.quantita AS ordineproduzione_quantita',
+                'ordine_produzione.tempoproduzione AS tempoproduzione',
+                'ordine_produzione.datascadenza AS datascadenza',
+                'ordine_produzione.datafine AS datafine',
+                'ordine_produzione.stato AS stato',
+                'ordine_produzione.prodotto_id',
+                'prodotto.codice AS prodotto_codice',
+                'prodotto.descrizione AS prodotto_descrizione',
+            )
+            ->where('stato', '=', OrdineProduzione::STATO_IN_PRODUZIONE)
+            ->orderBy('datascadenza', 'asc')
+            ->get();
+
+        foreach ($ordiniProduzione->all() as $ordine) {
+            $oreMinutiSecondi = $this->getOreMinutiSecondiFromSecondi($ordine->tempoproduzione);
+            $ordine->ore = $oreMinutiSecondi['ore'];
+            $ordine->minuti = $oreMinutiSecondi['minuti'];
+            $ordine->secondi = $oreMinutiSecondi['secondi'];
+        }
+
+        $prodotti = Prodotto::all();
+
+        return view('ordineproduzione.ordineproduzioneinproduzione', [ 'ordiniproduzione'=>$ordiniProduzione, 'prodotti'=>$prodotti ]);
+    }
+
+    /**
+     * @param $ordineProduzioneId
+     * @return JsonResponse
+     */
+    public function close($ordineProduzioneId) {
+        try {
+            $ordineProduzione = OrdineProduzione::findOrFail($ordineProduzioneId);
+
+            $ordineProduzione->stato = OrdineProduzione::STATO_CHIUSO;
+            $ordineProduzione->update();
+
+            request()->session()->flash('status', 'Ordine di Produzione chiuso correttamente');
+        } catch (QueryException $e) {
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            request()->session()->flash('closeError', $e->getMessage());
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
 }

@@ -39,8 +39,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.show') }}">Ordini di Produzione</a>
-                            <a class="dropdown-item item-menu" href="{{ route('macchina.show') }}">Chiudi Ordine in Produzione</a>
-                            <a class="dropdown-item item-menu" href="{{ route('tipomacchina.show') }}">Ordini di Produzione chiusi</a>
+                            <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.showordiniinproduzione') }}">Chiudi Ordine in Produzione</a>
+                            <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.showordinichiusi') }}">Ordini di Produzione chiusi</a>
                         </div>
                     </li>
                     @if (Auth::user()->isAdmin())
