@@ -49,18 +49,23 @@
                                 Amministrazione
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.show') }}">Utenti</a>
-                                <a class="dropdown-item item-menu" href="{{ route('macchina.show') }}">Ruoli</a>
-                                <a class="dropdown-item item-menu" href="{{ route('tipomacchina.show') }}">Permessi</a>
-                                <a class="dropdown-item item-menu" href="{{ route('tipomacchina.show') }}">Ruoli-Permessi</a>
-                                <a class="dropdown-item item-menu" href="{{ route('tipomacchina.show') }}">Utenti-Ruoli</a>
+                                <a class="dropdown-item item-menu" href="{{ route('user.show') }}">Utenti</a>
+                                <a class="dropdown-item item-menu" href="{{ route('role.show') }}">Ruoli</a>
                             </div>
                         </li>
                     @endif
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-0">
-                    <li class="nav-item text-nowrap">
-                        <a class="nav-link" href="#" style="padding: 18px 10px">Sign out</a>
+                    <li class="nav-item">
+                        <a class="nav-link" style="padding: 18px 10px" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
