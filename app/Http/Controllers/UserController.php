@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -19,7 +20,9 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('user.user', [ 'data'=>$users ]);
+        $roles = Role::all();
+
+        return view('utente.utente', [ 'users'=>$users, 'roles'=>$roles ]);
     }
 
     /**
@@ -31,7 +34,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
+            'password' => 'required|same:confirm_password',
             'roles' => 'required'
         ]);
 
@@ -66,8 +69,8 @@ class UserController extends Controller
     public function update(Request $request) {
         request()->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'same:confirm-password',
+            'email' => 'required|email',
+            'password' => 'same:confirm_password',
             'roles' => 'required'
         ]);
 
@@ -80,7 +83,13 @@ class UserController extends Controller
             }
 
             $user = User::findOrFail($input['id']);
-            $user->update($input);
+            $user->name = ($input['name']);
+            $user->email = ($input['email']);
+            if(!empty($input['password'])) {
+                $user->password = ($input['password']);
+            }
+            $user->update();
+
             DB::table('model_has_roles')->where('model_id', $input['id'])->delete();
 
             $user->assignRole(request()->input('roles'));
@@ -113,10 +122,14 @@ class UserController extends Controller
 
     /**
      * @param $id
-     * @return mixed
+     * @return JsonResponse
      */
     public function getUserById($id) {
+        /** @var User $user */
         $user = User::find($id);
-        return response()->json($user);
+
+        $roles = $user->roles()->allRelatedIds();
+
+        return new JsonResponse(['user' => $user, 'editRoles' => $roles]);
     }
 }
