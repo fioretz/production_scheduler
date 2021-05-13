@@ -16,6 +16,15 @@
         </div>
     @endif
 
+    @if(Session::has('deleteError'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('deleteError') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <form class="mb-3">
         <div class="form-row">
             <div class="col-3" data-column="2">

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Role;
 
 class RoleController extends Controller
 {
@@ -73,13 +74,19 @@ class RoleController extends Controller
 
     public function delete($roleId) {
         try {
+            DB::beginTransaction();
             $role = Role::findOrFail($roleId);
 
             $role->delete();
 
+            DB::commit();
             request()->session()->flash('status', 'Ruolo eliminato correttamente');
         } catch (QueryException $e) {
+            DB::rollBack();
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            request()->session()->flash('deleteError', $e->getMessage());
         }
 
         return new JsonResponse(['success' => '1']);
