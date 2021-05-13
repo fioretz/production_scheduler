@@ -13,6 +13,11 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:menu-admin', ['only' => ['show', 'store', 'update', 'delete']]);
+    }
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */

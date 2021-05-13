@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::get('/', ['uses' => 'DashboardController@index', 'as' => 'dashboard.index']);
 
     Route::get('/user', ['uses' => 'UserController@show', 'as' => 'user.show']);
     Route::get('/user/{id}', ['uses' => 'UserController@getUserById', 'as' => 'user.getUserById']);
     Route::post('/user/store', ['uses' => 'UserController@store', 'as' => 'user.store']);
     Route::post('/user/update', ['uses' => 'UserController@update', 'as' => 'user.update']);
-    Route::post('/user/{id}/delete', ['uses' => 'UserController@delete', 'as' => 'user.delete']);
+//    Route::post('/user/{id}/delete', ['uses' => 'UserController@delete', 'as' => 'user.delete']);
 
     Route::get('/role', ['uses' => 'RoleController@show', 'as' => 'role.show']);
     Route::get('/role/{id}', ['uses' => 'RoleController@getRoleById', 'as' => 'role.getRoleById']);
@@ -54,7 +54,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('/ordineproduzione/store', ['uses' => 'OrdineProduzioneController@store', 'as' => 'ordineproduzione.store']);
     Route::post('/ordineproduzione/update', ['uses' => 'OrdineProduzioneController@update', 'as' => 'ordineproduzione.update']);
     Route::post('/ordineproduzione/{id}/delete', ['uses' => 'OrdineProduzioneController@delete', 'as' => 'ordineproduzione.delete']);
-//});
+});
 
 Auth::routes([
     'register' => false,
