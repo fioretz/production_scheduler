@@ -23,7 +23,6 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
-        "backbone": "^1.npm 4.0",
         "bootstrap-datepicker": "^1.9.0",
         "bootstrap-select": "^1.13.18",
         "datatables.net": "^1.10.24",
