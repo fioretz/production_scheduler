@@ -53,15 +53,15 @@
             </thead>
             <tbody>
             @foreach($data as $row)
-                    <tr id="sid{{ $row->id }}">
-                        <td hidden></td>
-                        <td style="vertical-align: middle">
-                            <a href="javascript:void(0)" onclick="editTipoMacchina({{ $row->id }})" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="javascript:void(0)" onclick="deleteTipoMacchina({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
-                        </td>
-                        <td style="vertical-align: middle">{{ $row->codice }}</td>
-                        <td style="vertical-align: middle">{{ $row->descrizione }}</td>
-                    </tr>
+                <tr id="sid{{ $row->id }}">
+                    <td hidden></td>
+                    <td style="vertical-align: middle">
+                        <a href="javascript:void(0)" onclick="editTipoMacchina({{ $row->id }})" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                        <a href="javascript:void(0)" onclick="deleteTipoMacchina({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                    <td style="vertical-align: middle">{{ $row->codice }}</td>
+                    <td style="vertical-align: middle">{{ $row->descrizione }}</td>
+                </tr>
             @endforeach
             </tbody>
         </table>

@@ -31,7 +31,6 @@
             <thead>
             <tr>
                 <th hidden></th> {{-- aggiunto per poter togliere l'ordinamento dalla prima colonna --}}
-                <th></th>
                 <th>Numero Ordine</th>
                 <th>Prodotto</th>
                 <th>Quantità</th>

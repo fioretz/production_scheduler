@@ -34,7 +34,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/macchina/update', ['uses' => 'MacchinaController@update', 'as' => 'macchina.update']);
     Route::post('/macchina/{id}/delete', ['uses' => 'MacchinaController@delete', 'as' => 'macchina.delete']);
 
-
     Route::get('/tipomacchina', ['uses' => 'TipoMacchinaController@show', 'as' => 'tipomacchina.show']);
     Route::get('/tipomacchina/{id}', ['uses' => 'TipoMacchinaController@getTipoMacchinaById', 'as' => 'tipomacchina.getTipoMacchinaById']);
     Route::post('/tipomacchina/store', ['uses' => 'TipoMacchinaController@store', 'as' => 'tipomacchina.store']);
