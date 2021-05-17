@@ -128,6 +128,8 @@ class ProdottoController extends Controller
             request()->session()->flash('status', 'Prodotto eliminato correttamente');
         } catch (QueryException $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            request()->session()->flash('deleteError', $e->getMessage());
         }
 
         return new JsonResponse(['success' => '1']);

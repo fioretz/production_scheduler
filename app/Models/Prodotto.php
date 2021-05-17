@@ -42,5 +42,15 @@ class Prodotto extends Model
             }
 
         });
+
+        self::deleting(function($prodotto) {
+
+            $ordineProduzione = DB::table('ordine_produzione')->where('prodotto_id', $prodotto->id)->first();
+
+            if (!empty($prodotto)) {
+                throw new \Exception(sprintf('Impossibile eliminare prodotto %s, prodotto assegnato ad un ordine di produzione', $prodotto->codice));
+            }
+
+        });
     }
 }
