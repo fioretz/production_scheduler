@@ -47,7 +47,7 @@ class Prodotto extends Model
 
             $ordineProduzione = DB::table('ordine_produzione')->where('prodotto_id', $prodotto->id)->first();
 
-            if (!empty($prodotto)) {
+            if (!empty($ordineProduzione)) {
                 throw new \Exception(sprintf('Impossibile eliminare prodotto %s, prodotto assegnato ad un ordine di produzione', $prodotto->codice));
             }
 
