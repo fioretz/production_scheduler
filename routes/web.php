@@ -53,9 +53,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/ordineproduzione/store', ['uses' => 'OrdineProduzioneController@store', 'as' => 'ordineproduzione.store']);
     Route::post('/ordineproduzione/update', ['uses' => 'OrdineProduzioneController@update', 'as' => 'ordineproduzione.update']);
     Route::post('/ordineproduzione/{id}/delete', ['uses' => 'OrdineProduzioneController@delete', 'as' => 'ordineproduzione.delete']);
-    Route::get('/ordineproduzione/ordinichiusi', ['uses' => 'OrdineProduzioneController@showordinichiusi', 'as' => 'ordineproduzione.showordinichiusi']);
-    Route::get('/ordineproduzione/ordiniinproduzione', ['uses' => 'OrdineProduzioneController@showordiniinproduzione', 'as' => 'ordineproduzione.showordiniinproduzione']);
-    Route::get('/ordineproduzione/{id}/close', ['uses' => 'OrdineProduzioneController@close', 'as' => 'ordineproduzione.close']);
 });
 
 Auth::routes([
