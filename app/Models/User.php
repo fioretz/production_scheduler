@@ -54,7 +54,7 @@ class User extends Authenticatable
             if($r->name == 'admin'){
                 return true;
             }
-            return false;
         }
+        return false;
     }
 }

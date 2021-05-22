@@ -61,9 +61,6 @@ class OrdineProduzioneController extends Controller
             $quantita = $request['quantita'];
 
             $prodotto = Prodotto::find($prodottoId); //controllo ulteriore anche se controllo già all'inizio con il validate
-            if (empty($prodotto)) {
-                throw new \Exception('Prodotto non trovato');
-            }
             $tempoProduzione = $prodotto->tempounitarioproduzione * $quantita;
 
             $ordineProduzione = new OrdineProduzione();
@@ -105,9 +102,6 @@ class OrdineProduzioneController extends Controller
             $ordineProduzione->quantita = request()->input('quantita');
 
             $prodotto = Prodotto::find(request()->input('prodotto_id'));
-            if (empty($prodotto)) {
-                throw new \Exception('Prodotto non trovato');
-            }
             $tempoProduzione = $prodotto->tempounitarioproduzione * (request()->input('quantita'));
             $ordineProduzione->tempoproduzione = $tempoProduzione;
 
@@ -117,7 +111,6 @@ class OrdineProduzioneController extends Controller
         } catch (QueryException $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
         } catch (\Exception $e) {
-            dump($e->getMessage());die;
             return new JsonResponse(['errors' => $e->getMessage()]);
         }
 
@@ -162,7 +155,7 @@ class OrdineProduzioneController extends Controller
     /**
      * @return JsonResponse
      */
-    protected function getUltimoNumeroProduzione() {
+    public function getUltimoNumeroProduzione() {
         $numeroOrdineMax = OrdineProduzione::max('numeroordine');
 
         $nuovoNumeroOrdine = $numeroOrdineMax + 1;

@@ -72,7 +72,7 @@ class UserController extends Controller
      * @return JsonResponse
      */
     public function update(Request $request) {
-        request()->validate([
+        $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'same:confirm_password',
@@ -80,7 +80,7 @@ class UserController extends Controller
         ]);
 
         try {
-            $input = request()->all();
+            $input = $request->all();
             if (!empty($input['password'])) {
                 $input['password'] = Hash::make($input['password']);
             } else {
@@ -101,24 +101,6 @@ class UserController extends Controller
 
             request()->session()->flash('status', 'Utente modificato correttamente');
         } catch (\Exception $e) {
-            return new JsonResponse(['errors' => $e->errorInfo[2]]);
-        }
-
-        return new JsonResponse(['success' => '1']);
-    }
-
-    /**
-     * @param $userId
-     * @return JsonResponse
-     */
-    public function delete($userId) {
-        try {
-            $user = User::findOrFail($userId);
-
-            $user->delete();
-
-            request()->session()->flash('status', 'Tipo Macchina eliminato correttamente');
-        } catch (QueryException $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
 
