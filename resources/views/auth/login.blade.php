@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                <div style="text-align: center; margin:40px 0;"><img alt="Production Scheduler" src="{{ asset('images/logo_intero.svg') }}"></div>
+                <div style="text-align: center; margin:40px 0;"><img alt="Production Scheduler" src="{{ asset('images/logo_intero.svg') }}" style="width: 300px"></div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
