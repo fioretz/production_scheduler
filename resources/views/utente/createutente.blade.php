@@ -58,6 +58,9 @@
                                     <option value="{{ $row->id }}">{{ $row->name }}</option>
                                 @endforeach
                             </select>
+                            <span class="text-danger">
+                                <strong id="create-roles-error"></strong>
+                            </span>
                         </div>
                     </div>
                 </div>

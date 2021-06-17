@@ -20,13 +20,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user/{id}', ['uses' => 'UserController@getUserById', 'as' => 'user.getUserById']);
     Route::post('/user/store', ['uses' => 'UserController@store', 'as' => 'user.store']);
     Route::post('/user/update', ['uses' => 'UserController@update', 'as' => 'user.update']);
-//    Route::post('/user/{id}/delete', ['uses' => 'UserController@delete', 'as' => 'user.delete']);
 
     Route::get('/role', ['uses' => 'RoleController@show', 'as' => 'role.show']);
     Route::get('/role/{id}', ['uses' => 'RoleController@getRoleById', 'as' => 'role.getRoleById']);
     Route::post('/role/store', ['uses' => 'RoleController@store', 'as' => 'role.store']);
     Route::post('/role/update', ['uses' => 'RoleController@update', 'as' => 'role.update']);
     Route::post('/role/{id}/delete', ['uses' => 'RoleController@delete', 'as' => 'role.delete']);
+
+    Route::get('/profilo', ['uses' => 'ProfiloController@show', 'as' => 'profilo.show']);
+    Route::post('/profilo/updatenamemail', ['uses' => 'ProfiloController@updateNameMail', 'as' => 'profilo.updateNameMail']);
+    Route::post('/profilo/updatepassword', ['uses' => 'ProfiloController@updatePassword', 'as' => 'profilo.updatePassword']);
 
     Route::get('/macchina', ['uses' => 'MacchinaController@show', 'as' => 'macchina.show']);
     Route::get('/macchina/{id}', ['uses' => 'MacchinaController@getMacchinaById', 'as' => 'macchina.getMacchinaById']);

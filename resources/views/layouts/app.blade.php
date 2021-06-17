@@ -56,10 +56,10 @@
                 <ul class="navbar-nav my-2 my-lg-0 navbar-left">
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 18px 20px">
-                            {{ Auth::user()->name }}
+                            <i class="fa fa-user-circle" style="margin-right: 10px; font-size: 20px;"></i>{{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="right: 0; left: auto">
-                            <a class="dropdown-item item-menu" href="{{ route('user.show') }}">Utenti</a>
+                            <a class="dropdown-item item-menu" href="{{ route('profilo.show') }}">Profilo</a>
                             <a class="dropdown-item item-menu" style="padding: 18px 10px" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
