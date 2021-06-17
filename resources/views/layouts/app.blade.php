@@ -53,17 +53,23 @@
                         </li>
                     @endif
                 </ul>
-                <ul class="navbar-nav my-2 my-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" style="padding: 18px 10px" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                <ul class="navbar-nav my-2 my-lg-0 navbar-left">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 18px 20px">
+                            {{ Auth::user()->name }}
                         </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="right: 0; left: auto">
+                            <a class="dropdown-item item-menu" href="{{ route('user.show') }}">Utenti</a>
+                            <a class="dropdown-item item-menu" style="padding: 18px 10px" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
                     </li>
                 </ul>
             </div>
