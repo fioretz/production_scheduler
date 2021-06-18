@@ -174,6 +174,27 @@ class OrdineProduzioneController extends Controller
     }
 
     /**
+     * @param $ordineProduzioneId
+     * @return JsonResponse
+     */
+    public function open($ordineProduzioneId) {
+        try {
+            $ordineProduzione = OrdineProduzione::findOrFail($ordineProduzioneId);
+
+            $ordineProduzione->stato = OrdineProduzione::STATO_APERTO;
+            $ordineProduzione->update();
+
+            request()->session()->flash('status', 'Ordine di Produzione riaperto correttamente');
+        } catch (QueryException $e) {
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            request()->session()->flash('openError', $e->getMessage());
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
+
+    /**
      * @param $id
      * @return JsonResponse
      */

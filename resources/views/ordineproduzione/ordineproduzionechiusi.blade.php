@@ -7,6 +7,24 @@
         <h2>Ordini di Produzione Chiusi</h2>
     </div>
 
+    @if(Session::has('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('status') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if(Session::has('closeError'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('openError') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <form class="mb-3">
         <div class="form-row">
             <div class="col-3" data-column="2">
@@ -27,10 +45,11 @@
 
     <br><br>
     <div class="table-responsive rounded">
-        <table id="ordineProduzioneChiusiTable" class="table table-striped table-hover display" style="width: 100%z">
+        <table id="ordineProduzioneChiusiTable" class="table table-striped table-hover display" style="width: 100%">
             <thead>
             <tr>
                 <th hidden></th> {{-- aggiunto per poter togliere l'ordinamento dalla prima colonna --}}
+                <th></th>
                 <th>Numero Ordine</th>
                 <th>Prodotto</th>
                 <th>Quantità</th>
@@ -44,6 +63,9 @@
             @foreach($ordiniproduzione as $row)
                 <tr id="sid{{ $row->id }}">
                     <td hidden></td>
+                    <td style="vertical-align: middle">
+                        @if ($row->stato == 'C') <a href="javascript:void(0)" onclick="openOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-success"><i class="fa fa-check-circle"></i></a> @endif
+                    </td>
                     <td style="vertical-align: middle">{{ $row->numeroordine }}</td>
                     <td style="vertical-align: middle">{{ $row->prodotto_codice }}- {{ $row->prodotto_descrizione }}</td>
                     <td style="vertical-align: middle">{{ $row->ordineproduzione_quantita }}</td>
@@ -77,12 +99,13 @@
                 'dom': 'Brtip',
                 'columns': [
                     { 'width': '0%', 'orderable': true },
+                    { 'width': '5%', 'orderable': true },
                     { 'width': '15%', 'orderable': true },
-                    { 'width': '25%', 'orderable': true },
+                    { 'width': '23%', 'orderable': true },
                     { 'width': '12%', 'orderable': false },
-                    { 'width': '15%', 'orderable': false },
-                    { 'width': '14%', 'orderable': true },
-                    { 'width': '14%', 'orderable': true },
+                    { 'width': '14%', 'orderable': false },
+                    { 'width': '13%', 'orderable': true },
+                    { 'width': '13%', 'orderable': true },
                     { 'width': '5%', 'orderable': false },
                 ],
             });
@@ -102,5 +125,7 @@
             ).draw();
         }
     </script>
+
+    @include('ordineproduzione.openordineproduzione')
 
 @endsection

@@ -47,7 +47,7 @@
         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#createOrdineProduzioneModal">Nuovo Ordine Produzione</a>
     </div>
     <div class="table-responsive rounded">
-        <table id="ordineProduzioneTable" class="table table-striped table-hover display">
+        <table id="ordineProduzioneTable" class="table table-striped table-hover display" style="width: 100%">
             <thead>
             <tr>
                 <th hidden></th> {{-- aggiunto per poter togliere l'ordinamento dalla prima colonna --}}
