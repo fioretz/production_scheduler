@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    @if(Session::has('closeError'))
+    @if(Session::has('openError'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>{{ Session::get('openError') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

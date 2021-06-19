@@ -195,6 +195,27 @@ class OrdineProduzioneController extends Controller
     }
 
     /**
+     * @param $ordineProduzioneId
+     * @return JsonResponse
+     */
+    public function close($ordineProduzioneId) {
+        try {
+            $ordineProduzione = OrdineProduzione::findOrFail($ordineProduzioneId);
+
+            $ordineProduzione->stato = OrdineProduzione::STATO_CHIUSO;
+            $ordineProduzione->update();
+
+            request()->session()->flash('status', 'Ordine di Produzione chiuso correttamente');
+        } catch (QueryException $e) {
+            return new JsonResponse(['errors' => $e->errorInfo[2]]);
+        } catch (\Exception $e) {
+            request()->session()->flash('closeError', $e->getMessage());
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
+
+    /**
      * @param $id
      * @return JsonResponse
      */

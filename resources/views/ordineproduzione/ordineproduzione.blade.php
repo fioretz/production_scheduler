@@ -25,6 +25,15 @@
         </div>
     @endif
 
+    @if(Session::has('closeError'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('closeError') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <form class="mb-3">
         <div class="form-row">
             <div class="col-3" data-column="2">
@@ -68,6 +77,7 @@
                     <td style="vertical-align: middle">
                         <a href="javascript:void(0)" onclick="editOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                         @if ($row->stato == 'A') <a href="javascript:void(0)" onclick="deleteOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> @endif
+                        @if ($row->stato == 'A') <a href="javascript:void(0)" onclick="closeOrdineProduzione({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i></a> @endif
                     </td>
                     <td style="vertical-align: middle">{{ $row->numeroordine }}</td>
                     <td style="vertical-align: middle">{{ $row->prodotto_codice }}- {{ $row->prodotto_descrizione }}</td>
@@ -132,5 +142,6 @@
     @include('ordineproduzione.createordineproduzione')
     @include('ordineproduzione.editordineproduzione')
     @include('ordineproduzione.deleteordineproduzione')
+    @include('ordineproduzione.closeordineproduzione')
 
 @endsection
