@@ -182,6 +182,7 @@ class OrdineProduzioneController extends Controller
             $ordineProduzione = OrdineProduzione::findOrFail($ordineProduzioneId);
 
             $ordineProduzione->stato = OrdineProduzione::STATO_APERTO;
+            $ordineProduzione->datafine = null;
             $ordineProduzione->update();
 
             request()->session()->flash('status', 'Ordine di Produzione riaperto correttamente');
@@ -203,6 +204,7 @@ class OrdineProduzioneController extends Controller
             $ordineProduzione = OrdineProduzione::findOrFail($ordineProduzioneId);
 
             $ordineProduzione->stato = OrdineProduzione::STATO_CHIUSO;
+            $ordineProduzione->datafine = new \DateTime();
             $ordineProduzione->update();
 
             request()->session()->flash('status', 'Ordine di Produzione chiuso correttamente');
