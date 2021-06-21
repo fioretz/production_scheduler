@@ -29,7 +29,8 @@ mix.js([
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/datatables.net/js/jquery.dataTables.js',
         'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js',
-        'node_modules/moment/min/moment-with-locales.min.js'
+        'node_modules/moment/min/moment-with-locales.min.js',
+        'node_modules/block-ui/jquery.blockUI.js'
     ], 'public/js/scripts.js')
     .styles([
         'node_modules/bootstrap/dist/css/bootstrap.css',
