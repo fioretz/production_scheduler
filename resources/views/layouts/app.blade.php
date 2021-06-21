@@ -42,6 +42,15 @@
                             <a class="dropdown-item item-menu" href="{{ route('ordineproduzione.showOrdiniChiusi') }}">Ordini di Produzione chiusi</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 18px 10px">
+                            Pianificazione Produzione
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item item-menu" href="{{ route('pianificazioneproduzione.creaPianificazioneForm') }}">Crea Pianificazione Produzione</a>
+{{--                            <a class="dropdown-item item-menu" href="{{ route('pianificazioneproduzione.visualizzaPianificazione') }}">Visualizza Pianificazione</a>--}}
+                        </div>
+                    </li>
                     @if (Auth::user()->isAdmin())
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 18px 10px">

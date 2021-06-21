@@ -59,6 +59,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/ordineproduzione/ordinichiusi', ['uses' => 'OrdineProduzioneController@showOrdiniChiusi', 'as' => 'ordineproduzione.showOrdiniChiusi']);
     Route::post('/ordineproduzione/{id}/open', ['uses' => 'OrdineProduzioneController@open', 'as' => 'ordineproduzione.open']);
     Route::post('/ordineproduzione/{id}/close', ['uses' => 'OrdineProduzioneController@close', 'as' => 'ordineproduzione.close']);
+
+    Route::get('/pianificazioneproduzione/creapianificazioneform', ['uses' => 'PianificazioneProduzioneTestaController@creaPianificazioneForm', 'as' => 'pianificazioneproduzione.creaPianificazioneForm']);
 });
 
 Auth::routes([
