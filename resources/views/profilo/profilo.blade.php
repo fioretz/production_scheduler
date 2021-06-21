@@ -20,7 +20,7 @@
         <h3>Modifica Nome / Email</h3>
     </div>
 
-    <div id="UpdateNameMaleErrorLabel" class="alert alert-danger" style="display: none" role="alert"></div>
+    <div id="UpdateNameMailErrorLabel" class="alert alert-danger" style="display: none" role="alert"></div>
     <form id="updateNameMailForm">
         <div class="form-group col-3">
             <label for="updateName">Nome: </label>
@@ -85,7 +85,7 @@
                 },
                 success: function(response) {
                     if (response.errors) {
-                        $('#UpdateNameMaleErrorLabel').html('<strong>Errore! </strong>' + response.errors + '<button type="button" class="close" onclick="$(\'#UpdateNameMaleErrorLabel\').fadeOut()">&times;</button>'
+                        $('#UpdateNameMailErrorLabel').html('<strong>Errore! </strong>' + response.errors + '<button type="button" class="close" onclick="$(\'#UpdateNameMailErrorLabel\').fadeOut()">&times;</button>'
                         ).fadeIn();
                     } else {
                         window.location.href = "{{ route('profilo.show') }}"
