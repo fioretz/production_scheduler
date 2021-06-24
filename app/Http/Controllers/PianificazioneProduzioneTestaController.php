@@ -23,6 +23,37 @@ class PianificazioneProduzioneTestaController extends Controller
         return view('pianificazioneproduzione.creapianificazioneform');
     }
 
+    public function show() {
+        $pianificazioniProduzione = PianificazioneProduzioneTesta::all();
+
+        return view('pianificazioneproduzione.pianificazioneproduzione', [ 'data'=>$pianificazioniProduzione ]);
+    }
+
+    public function delete($pianificazioneProduzioneId) {
+        DB::beginTransaction();
+        try {
+            //delete pianificazione_produzione_ordine
+            $pianificazioneProduzioneMacchina = DB::table('pianificazione_produzione_macchina')->where('pianprodtesta_id', $pianificazioneProduzioneId)->get();
+            foreach ($pianificazioneProduzioneMacchina as $row) {
+                DB::table("pianificazione_produzione_ordine")->where('pianprodmacchina_id', $row->id)->delete();
+            }
+
+            //delete pianificazione produzione macchina
+            DB::table("pianificazione_produzione_macchina")->where('pianprodtesta_id', $pianificazioneProduzioneId)->delete();
+
+            //delete pianificazione produzione testa
+            DB::table("pianificazione_produzione_testa")->where('id', $pianificazioneProduzioneId)->delete();
+
+            DB::commit();
+            request()->session()->flash('status', 'Pianificazione di Produzione eliminata correttamente');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            request()->session()->flash('deleteError', $e->getMessage());
+        }
+
+        return new JsonResponse(['success' => '1']);
+    }
+
     public function creaPianificazione(Request $request) {
         $request->validate([
             'nome' => 'required|unique:pianificazione_produzione_testa,nome',

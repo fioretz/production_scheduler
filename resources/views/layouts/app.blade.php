@@ -48,7 +48,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item item-menu" href="{{ route('pianificazioneproduzione.creaPianificazioneForm') }}">Crea Pianificazione Produzione</a>
-{{--                            <a class="dropdown-item item-menu" href="{{ route('pianificazioneproduzione.visualizzaPianificazione') }}">Visualizza Pianificazione</a>--}}
+                            <a class="dropdown-item item-menu" href="{{ route('pianificazioneproduzione.show') }}">Visualizza Pianificazione Produzione</a>
                         </div>
                     </li>
                     @if (Auth::user()->isAdmin())
