@@ -71,7 +71,7 @@
                 orientation: "bottom left",
                 todayHighlight: true,
                 autoclose: true,
-                container: '.container-fluid'
+                container: '#contenutoIntestazione'
             });
         });
 

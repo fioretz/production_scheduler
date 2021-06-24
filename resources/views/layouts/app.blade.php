@@ -16,7 +16,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg fixed-top navbar-inverse" style="padding: 0">
-        <div class="container-fluid">
+        <div class="container-fluid" id="contenutoIntestazione">
             <div class="navbar-header">
                 <a class="navbar-brand" href="{{ route('dashboard.index') }}" style="color: #fff">
                     <img alt="Production Scheduler" src="{{ asset('images/logo_bianco.svg') }}" style="opacity: 0.7; height: 50px">
@@ -85,7 +85,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid" id="contenutoPagina">
         <div class="content">
             <main>
                 @yield('content')
