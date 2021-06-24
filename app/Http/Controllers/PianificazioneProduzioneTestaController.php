@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrdineProduzione;
+use App\Models\PianificazioneProduzioneMacchina;
+use App\Models\PianificazioneProduzioneOrdine;
 use App\Models\PianificazioneProduzioneTesta;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -42,7 +44,11 @@ class PianificazioneProduzioneTestaController extends Controller
 
             $pianificazioneId = $pianificazioneProduzioneTesta->id;
 
-            $this->proceduraCreaPianificazione($pianificazioneId, $dataInizio);
+            //lancio procedura calcolo pianificazione produzione, ottengo la struttura dati da persistere a db
+            $macchine = $this->proceduraCreaPianificazione($dataInizio);
+
+            //persisto la struttura dati su db nelle tabelle pianificazione_produzione_macchina e pianificazione_produzione_ordine
+            $this->persistDataPianificazioneProduzione($pianificazioneId, $macchine);
 
             $request->session()->flash('status', 'Pianificazione Produzione creata correttamente');
             DB::commit();
@@ -54,12 +60,21 @@ class PianificazioneProduzioneTestaController extends Controller
         return new JsonResponse(['success' => '1']);
     }
 
-    protected function proceduraCreaPianificazione($pianificazioneId, $dataInizioProduzione) {
+    /**
+     * @param $pianificazioneId
+     * @param $dataInizioProduzione
+     * @return array
+     * @throws \Exception
+     */
+    protected function proceduraCreaPianificazione($dataInizioProduzione) {
         $macchine = $this->readMacchine(); //questo array verrà modificato per tenere traccia della proceduara di calcolo della pianificazione
         $ordiniAperti = $this->readOrdiniAperti(); //array contenente gli ordini aperti da schedulare sulle macchine
 
+        //scandisco tutti gli ordini di produzione aperti per allocarli alle macchine disponibili
         foreach ($ordiniAperti as $ordineAperto) {
+            //ottengo l'indice della macchina più scarica compatibile con il prodotto che si vuole produrre
             $macchinaIndex = $this->getMacchinaIndexConMinimoTempoUtilizzoETipoMacchinaAdeguato($ordineAperto['tipomacchina_id'], $macchine);
+            //se non esiste una macchina alla quale assegnare un ordine di produzione tengo traccia dell'errore
             if ($macchinaIndex === false) {
                 $this->erroreProcedura = true;
                 $this->elencoErroriProcedura[] = [
@@ -84,7 +99,54 @@ class PianificazioneProduzioneTestaController extends Controller
             ];
         }
 
-        dump($macchine);die;
+        //compongo la stringa degli errori da visualizzare lato client all'utente
+        if ($this->erroreProcedura) {
+            $errorMessage = 'Errore schedulazione Ordini di Produzione, non si dispone di una macchina a cui assegnare i seguenti ordini:';
+            foreach ($this->elencoErroriProcedura as $errore) {
+                $errorMessage = $errorMessage . ' ' . $errore['numeroordine'] . ',';
+            }
+            $errorMessage = substr($errorMessage, 0, -1);
+            throw new \Exception($errorMessage);
+        }
+
+        return $macchine;
+    }
+
+    protected function persistDataPianificazioneProduzione($pianificazioneId, $macchine) {
+        //scandisco tutte le macchine a cui ho assegnato un ordine di produzione da produrre
+        foreach ($macchine as $macchina) {
+            //controllo che alla macchina siano assegnati degli ordini di produzione
+            if (array_key_exists('ordiniproduzione', $macchina)) {
+                //creo record tabella pianificazione_produzione_macchina
+                $pianificazioneProduzioneMacchina = new PianificazioneProduzioneMacchina();
+                $pianificazioneProduzioneMacchina->macchina_codice = $macchina['macchina_codice'];
+                $pianificazioneProduzioneMacchina->macchina_descrizione = $macchina['macchina_descrizione'];
+                $pianificazioneProduzioneMacchina->tipomacchina_codice = $macchina['tipomacchina_codice'];
+                $pianificazioneProduzioneMacchina->tipomacchina_descrizione = $macchina['tipomacchina_descrizione'];
+                $pianificazioneProduzioneMacchina->tempoutilizzo = $macchina['tempoutilizzo'];
+                $pianificazioneProduzioneMacchina->pianprodtesta_id = $pianificazioneId;
+                $pianificazioneProduzioneMacchina->save();
+
+                $pianificazioneMacchinaId = $pianificazioneProduzioneMacchina->id;
+
+                //creo un record tabella pianificazione_produzione_ordine per ogni ordine di produzione assegnato alla macchina
+                $sequenza = 1;
+                foreach ($macchina['ordiniproduzione'] as $ordineProduzione) {
+                    $pianificazioneProduzioneOrdine = new PianificazioneProduzioneOrdine();
+                    $pianificazioneProduzioneOrdine->numeroordine = $ordineProduzione['numeroordine'];
+                    $pianificazioneProduzioneOrdine->prodotto_codice = $ordineProduzione['prodotto_codice'];
+                    $pianificazioneProduzioneOrdine->prodotto_descrizione = $ordineProduzione['prodotto_descrizione'];
+                    $pianificazioneProduzioneOrdine->quantita = $ordineProduzione['quantita'];
+                    $pianificazioneProduzioneOrdine->datascadenza = $ordineProduzione['datascadenza'];
+                    $pianificazioneProduzioneOrdine->datainizio = $ordineProduzione['datainizio'];
+                    $pianificazioneProduzioneOrdine->datafine = $ordineProduzione['datafine'];
+                    $pianificazioneProduzioneOrdine->pianprodmacchina_id = $pianificazioneMacchinaId;
+                    $pianificazioneProduzioneOrdine->sequenza = $sequenza;
+                    $pianificazioneProduzioneOrdine->save();
+                    $sequenza += 1;
+                }
+            }
+        }
     }
 
     /**
