@@ -32,6 +32,20 @@
                 <strong id="create-descrizione-error"></strong>
             </span>
         </div>
+        <div class="form-group col-3">
+            <div class="date">
+                <label for="createDataInizio">Data Inizio Produzione Stimata: </label>
+                <div class="input-group mb-2 col-6">
+                    <input type="text" class="form-control" id="createDataInizio" name="event_date" placeholder="dd/mm/yyyy" autocomplete="off" >
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <span class="text-danger">
+                                <strong id="create-datainizio-error"></strong>
+                            </span>
+            </div>
+        </div>
         <div class="col-3">
             <button class="btn btn-primary btn-lg float-right" type="submit">Crea</button>
         </div>
@@ -50,14 +64,31 @@
 
 
     <script>
+        $(document).ready(function() {
+            $('.date #createDataInizio').datepicker({
+                format: "dd/mm/yyyy",
+                language: "it",
+                orientation: "bottom left",
+                todayHighlight: true,
+                autoclose: true,
+                container: '.container-fluid'
+            });
+        });
+
         $("#createPianificazioneForm").submit(function(e) {
             e.preventDefault();
 
-            let nome = $("createNome").val();
-            let descrizione = $("createDescrizione").val();
+            let nome = $("#createNome").val();
+            let descrizione = $("#createDescrizione").val();
+            let dataInizio = $("#createDataInizio").val();
+            if (dataInizio !== '') {
+                dataInizio = moment(dataInizio, "DD/MM/YYYY");
+                dataInizio = moment(dataInizio).format('Y-MM-DD');
+            }
 
             $("#create-nome-error").html("");
             $("#create-descrizione-error").html("");
+            $("#create-datainizio-error").html("");
 
             $.blockUI({
                 css: {
@@ -68,7 +99,37 @@
 
             $(".navbar").block({
                 message: ''
+            });
+
+            $.ajax({
+                url: "{{ route('pianificazioneproduzione.creaPianificazione') }}",
+                type: 'POST',
+                data: {
+                    nome: nome,
+                    descrizione: descrizione,
+                    datainizio: dataInizio
+                },
+                success: function(response) {
+                    if (response.errors) {
+                        $('#CreatePianificazioneErrorLabel').html('<strong>Errore! </strong>' + response.errors + '<button type="button" class="close" onclick="$(\'#CreatePianificazioneErrorLabel\').fadeOut()">&times;</button>'
+                        ).fadeIn();
+                    } else {
+                        window.location.href = "{{ route('pianificazioneproduzione.creaPianificazioneForm') }}"
+                    }
+                },
+                error: function (err) {
+                    if (err.status === 422) {
+                        $.each(err.responseJSON.errors, function (i, error) {
+                            $('#create-'+i+'-error').html('<span style="color: #7f0d0d;">'+error[0]+'</span>');
+                        });
+                    }
+                },
+                complete: function() {
+                    $.unblockUI();
+                    $(".navbar").unblock();
+                }
             })
+
 
         })
 
