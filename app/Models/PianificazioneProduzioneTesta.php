@@ -13,5 +13,5 @@ class PianificazioneProduzioneTesta extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['nome', 'descrizione', 'datacreazione'];
+    protected $fillable = ['nome', 'descrizione', 'datainizio', 'datacreazione'];
 }
