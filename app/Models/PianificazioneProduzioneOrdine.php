@@ -13,5 +13,5 @@ class PianificazioneProduzioneOrdine extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['numeroordine', 'prodotto_codice', 'prodotto_descrizione', 'quantita', 'datascadenza', 'datainizio', 'datafine', 'pianprodmacchina_id'];
+    protected $fillable = ['numeroordine', 'prodotto_codice', 'prodotto_descrizione', 'quantita', 'datascadenza', 'datainizio', 'datafine', 'pianprodmacchina_id', 'sequenza'];
 }
