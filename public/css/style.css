@@ -73,8 +73,16 @@ body {
     display: inline-block;
 }
 
-.badge-errore-scadenza {
+.badge-scadenza-errore {
     color: #761b18;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: x-large;
+}
+
+.badge-scadenza-ok {
+    color: #1d643b;
     position: absolute;
     top: 15px;
     right: 15px;
