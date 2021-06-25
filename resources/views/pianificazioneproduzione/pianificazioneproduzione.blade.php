@@ -48,10 +48,17 @@
     </form>
 
     <script>
+        function showPianificazioneById() {
+            let id = $("#pianificazione").val();
+            if (_.isEmpty(id)) {
+                $('#select-pianificazione-error').html('<span style="color: #7f0d0d;">Selezionare una pianificazione di produzione</span>');
+                return;
+            }
+            window.location.href = "{{ route('pianificazioneproduzione.getPianificazioneById', '') }}" + "/" + id;
+        }
 
     </script>
 
     @include('pianificazioneproduzione.deletepianificazioneproduzione')
-    @include('pianificazioneproduzione.visualizzapianificazioneproduzione')
 
 @endsection

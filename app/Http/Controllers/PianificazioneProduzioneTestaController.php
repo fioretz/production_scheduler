@@ -29,6 +29,84 @@ class PianificazioneProduzioneTestaController extends Controller
         return view('pianificazioneproduzione.pianificazioneproduzione', [ 'data'=>$pianificazioniProduzione ]);
     }
 
+    public function getPianificazioneById($id) {
+        $pianificazioneProduzioneTesta = PianificazioneProduzioneTesta::where('id', $id)->first();
+
+        $pianificazioneProduzione = DB::table('pianificazione_produzione_macchina')
+            ->leftJoin('pianificazione_produzione_ordine', 'pianificazione_produzione_macchina.id', '=', 'pianificazione_produzione_ordine.pianprodmacchina_id')
+            ->select(
+                'pianificazione_produzione_macchina.id AS pianprodmacchina_id',
+                'pianificazione_produzione_macchina.pianprodtesta_id AS pianprodtesta_id',
+                'pianificazione_produzione_macchina.macchina_codice AS macchina_codice',
+                'pianificazione_produzione_macchina.macchina_descrizione AS macchina_descrizione',
+                'pianificazione_produzione_macchina.tipomacchina_codice AS tipomacchina_codice',
+                'pianificazione_produzione_macchina.tipomacchina_descrizione AS tipomacchina_descrizione',
+                'pianificazione_produzione_macchina.tempoutilizzo AS tempoutilizzo',
+                'pianificazione_produzione_ordine.numeroordine AS numeroordine',
+                'pianificazione_produzione_ordine.prodotto_codice AS prodotto_codice',
+                'pianificazione_produzione_ordine.prodotto_descrizione AS prodotto_descrizione',
+                'pianificazione_produzione_ordine.quantita AS ordine_quantita',
+                'pianificazione_produzione_ordine.datascadenza AS datascadenza',
+                'pianificazione_produzione_ordine.datainizio AS datainizio',
+                'pianificazione_produzione_ordine.datafine AS datafine',
+                'pianificazione_produzione_ordine.sequenza AS sequenza'
+            )
+            ->where('pianificazione_produzione_macchina.pianprodtesta_id', '=', $id)
+            ->orderBy('pianificazione_produzione_macchina.macchina_codice', 'asc')
+            ->orderBy('pianificazione_produzione_ordine.sequenza', 'asc')
+            ->get();
+
+        //appiattisco la struttura $pianificazioneProduzione per poterla utilizzare meglio lato client
+        $pianificazioneProduzione = $pianificazioneProduzione->toArray();
+        foreach ($pianificazioneProduzione as &$row) {
+            $row = json_decode(json_encode($row), true);
+        }
+
+        $pianificazioneProduzioneStrutturaPiatta = [];
+        $macchinaCodice = '';
+        foreach ($pianificazioneProduzione as $rigaPianificazione) {
+            //inserisco una nuova macchina solo quando ne incontro una diversa dalla precedente
+            if ($rigaPianificazione['macchina_codice'] != $macchinaCodice) {
+                $macchinaCodice = $rigaPianificazione['macchina_codice'];
+                $pianificazioneProduzioneStrutturaPiatta[$macchinaCodice] = [
+                    'pianprodmacchina_id' => $rigaPianificazione['pianprodmacchina_id'],
+                    'pianprodtesta_id' => $rigaPianificazione['pianprodtesta_id'],
+                    'macchina_codice' => $rigaPianificazione['macchina_codice'],
+                    'macchina_descrizione' => $rigaPianificazione['macchina_descrizione'],
+                    'tipomacchina_codice' => $rigaPianificazione['tipomacchina_codice'],
+                    'tipomacchina_descrizione' => $rigaPianificazione['tipomacchina_descrizione'],
+                    'tempoutilizzo' => $rigaPianificazione['tempoutilizzo'],
+                ];
+            }
+            //aggiungo ad ogni macchina i suoi ordini di produzione
+            $pianificazioneProduzioneStrutturaPiatta[$macchinaCodice]['ordiniproduzione'][] = [
+                'numeroordine' => $rigaPianificazione['numeroordine'],
+                'prodotto_codice' => $rigaPianificazione['prodotto_codice'],
+                'prodotto_descrizione' => $rigaPianificazione['prodotto_descrizione'],
+                'ordine_quantita' => $rigaPianificazione['ordine_quantita'],
+                'datascadenza' => $rigaPianificazione['datascadenza'],
+                'datainizio' => $rigaPianificazione['datainizio'],
+                'datafine' => $rigaPianificazione['datafine'],
+                'sequenza' => $rigaPianificazione['sequenza'],
+                'erroreScadenza' => ($rigaPianificazione['datascadenza'] < $rigaPianificazione['datafine']) //controllo se l'ordina verrà completato dopo la data di scadenza
+            ];
+        }
+
+//        dump($pianificazioneProduzioneTesta, $pianificazioneProduzioneStrutturaPiatta);die;
+
+        if (empty($pianificazioneProduzioneTesta)) {
+            return view('pianificazioneproduzione.visualizzapianificazioneproduzioneerrore');
+        }
+
+        return view(
+            'pianificazioneproduzione.visualizzapianificazioneproduzione',
+            [
+                'pianificazioneTesta' => $pianificazioneProduzioneTesta,
+                'pianificazioneRighe' => $pianificazioneProduzioneStrutturaPiatta
+            ]
+        );
+    }
+
     public function delete($pianificazioneProduzioneId) {
         DB::beginTransaction();
         try {

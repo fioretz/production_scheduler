@@ -55,3 +55,30 @@ body {
 .item-menu {
     padding: 1rem 2rem !important;
 }
+
+.ordiniproduzione-group {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.ordiniproduzione-group > .row {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.ordiniproduzione-group > .row > .col-4 {
+    display: inline-block;
+}
+
+.badge-errore-scadenza {
+    color: #761b18;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: x-large;
+}
+
+

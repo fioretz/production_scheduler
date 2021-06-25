@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/pianificazioneproduzione/creapianificazione', ['uses' => 'PianificazioneProduzioneTestaController@creaPianificazione', 'as' => 'pianificazioneproduzione.creaPianificazione']);
     Route::get('/pianificazioneproduzione', ['uses' => 'PianificazioneProduzioneTestaController@show', 'as' => 'pianificazioneproduzione.show']);
     Route::post('/pianificazioneproduzione/{id}/delete', ['uses' => 'PianificazioneProduzioneTestaController@delete', 'as' => 'pianificazioneproduzione.delete']);
+    Route::get('/pianificazioneproduzione/{id}', ['uses' => 'PianificazioneProduzioneTestaController@getPianificazioneById', 'as' => 'pianificazioneproduzione.getPianificazioneById']);
 });
 
 Auth::routes([
