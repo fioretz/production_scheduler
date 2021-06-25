@@ -25,7 +25,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-12">
-                            <label for="editPermission">Tipo Macchina: </label>
+                            <label for="editPermission">Permessi: </label>
                             <select id="editPermission" class="selectpicker show-tick form-control border" multiple data-live-search="true" data-style="btn-white">
                                 @foreach($permissions as $row)
                                     <option value="{{ $row->id }}">{{ $row->name }}</option>
