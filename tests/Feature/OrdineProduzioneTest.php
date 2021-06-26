@@ -255,4 +255,60 @@ class OrdineProduzioneTest extends TestCase
         $this->actingAs($user)->json('POST', '/ordineproduzione/tempoproduzione', $data, ['Accept' => 'application/json'])
             ->assertStatus(200);
     }
+
+    public function test_close_ordineproduzione_aperto()
+    {
+        /** @var User $user */
+        $user = User::find(2);
+
+        $ordineProduzione = OrdineProduzione::where('stato', '=', 'A')->first();
+        $id = $ordineProduzione->id;
+
+        $this->actingAs($user)->json('POST', 'ordineproduzione/' . $id . '/close', ['Accept' => 'application/json'])
+            ->assertStatus(200);
+    }
+
+    public function test_open_ordineproduzione_chiuso()
+    {
+        /** @var User $user */
+        $user = User::find(2);
+
+        $ordineProduzione = OrdineProduzione::where('stato', '=', 'C')->first();
+        $id = $ordineProduzione->id;
+
+        $this->actingAs($user)->json('POST', 'ordineproduzione/' . $id . '/open', ['Accept' => 'application/json'])
+            ->assertStatus(200);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_user_is_logged_ordini_chiusi()
+    {
+        /** @var User $user */
+        $user = User::find(2);
+
+        $response = $this->actingAs($user)
+            ->withSession(['banned' => false])
+            ->get('/ordineproduzione/ordinichiusi');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_user_is_not_logged_ordini_chiusi()
+    {
+        $response = $this->withSession(['banned' => false])
+            ->get('/ordineproduzione/ordinichiusi');
+
+        $response->assertStatus(302);
+    }
+
+
 }

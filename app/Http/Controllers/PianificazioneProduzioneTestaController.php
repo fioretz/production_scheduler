@@ -99,8 +99,6 @@ class PianificazioneProduzioneTestaController extends Controller
             ];
         }
 
-//        dump($pianificazioneProduzioneTesta, $pianificazioneProduzioneStrutturaPiatta);die;
-
         if (empty($pianificazioneProduzioneTesta)) {
             return view('pianificazioneproduzione.visualizzapianificazioneproduzioneerrore');
         }
@@ -378,24 +376,5 @@ class PianificazioneProduzioneTestaController extends Controller
 
         $dataFine = $dataInizioProduzione->add(new \DateInterval('PT' . $tempoProduzioneTot . 'S'));
         return ($dataFine->format('Y-m-d'));
-    }
-
-    /**
-     * @param $tempo
-     * @return array
-     */
-    protected function getOreMinutiSecondiFromSecondi($tempo)
-    {
-        $ore = floor($tempo / 3600);
-        $minuti = floor(($tempo / 60) % 60);
-        $secondi = $tempo % 60;
-
-        $oreMinutiSecondi = [
-            'ore' => $ore,
-            'minuti' => $minuti,
-            'secondi' => $secondi
-        ];
-
-        return $oreMinutiSecondi;
     }
 }
