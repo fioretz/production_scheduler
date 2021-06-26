@@ -23,12 +23,19 @@ class PianificazioneProduzioneTestaController extends Controller
         return view('pianificazioneproduzione.creapianificazioneform');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show() {
         $pianificazioniProduzione = PianificazioneProduzioneTesta::all();
 
         return view('pianificazioneproduzione.pianificazioneproduzione', [ 'data'=>$pianificazioniProduzione ]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function getPianificazioneById($id) {
         $pianificazioneProduzioneTesta = PianificazioneProduzioneTesta::where('id', $id)->first();
 
@@ -107,6 +114,10 @@ class PianificazioneProduzioneTestaController extends Controller
         );
     }
 
+    /**
+     * @param $pianificazioneProduzioneId
+     * @return JsonResponse
+     */
     public function delete($pianificazioneProduzioneId) {
         DB::beginTransaction();
         try {
@@ -132,6 +143,10 @@ class PianificazioneProduzioneTestaController extends Controller
         return new JsonResponse(['success' => '1']);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function creaPianificazione(Request $request) {
         $request->validate([
             'nome' => 'required|unique:pianificazione_produzione_testa,nome',
@@ -221,7 +236,11 @@ class PianificazioneProduzioneTestaController extends Controller
         return $macchine;
     }
 
-    protected function persistDataPianificazioneProduzione($pianificazioneId, $macchine) {
+    /**
+     * @param $pianificazioneId
+     * @param $macchine
+     */
+    protected function persistDataPianificazioneProduzione($pianificazioneId, array $macchine): void {
         //scandisco tutte le macchine a cui ho assegnato un ordine di produzione da produrre
         foreach ($macchine as $macchina) {
             //controllo che alla macchina siano assegnati degli ordini di produzione
@@ -332,7 +351,7 @@ class PianificazioneProduzioneTestaController extends Controller
      * @param $macchine
      * @return false|int|string
      */
-    protected function getMacchinaIndexConMinimoTempoUtilizzoETipoMacchinaAdeguato($tipoMacchinaId, $macchine) {
+    protected function getMacchinaIndexConMinimoTempoUtilizzoETipoMacchinaAdeguato($tipoMacchinaId, array $macchine) {
         $tempoMinimo = false;
         $macchinaIndex = false;
         foreach ($macchine as $index => $macchina) {
@@ -347,6 +366,12 @@ class PianificazioneProduzioneTestaController extends Controller
         return $macchinaIndex;
     }
 
+    /**
+     * @param $dataInizioProduzione
+     * @param $tempoProduzioneTot
+     * @return string
+     * @throws \Exception
+     */
     protected function getDataFineOrdine($dataInizioProduzione, $tempoProduzioneTot) {
         $dataInizioProduzione = \DateTime::createFromFormat('Y-m-d', $dataInizioProduzione);
         $dataInizioProduzione->setTime(0, 0, 0);

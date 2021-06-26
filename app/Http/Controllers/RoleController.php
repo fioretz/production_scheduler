@@ -80,6 +80,10 @@ class RoleController extends Controller
         return new JsonResponse(['success' => '1']);
     }
 
+    /**
+     * @param $roleId
+     * @return JsonResponse
+     */
     public function delete($roleId) {
         try {
             DB::beginTransaction();

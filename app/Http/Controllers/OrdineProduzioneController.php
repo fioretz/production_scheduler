@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrdineProduzioneController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show() {
         $ordiniProduzione = DB::table('ordine_produzione')
             ->leftJoin('prodotto', 'ordine_produzione.prodotto_id', '=', 'prodotto.id')
