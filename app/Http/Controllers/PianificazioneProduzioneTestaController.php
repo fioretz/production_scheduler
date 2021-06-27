@@ -146,6 +146,7 @@ class PianificazioneProduzioneTestaController extends Controller
      * @return JsonResponse
      */
     public function creaPianificazione(Request $request) {
+        // validazione sui dati inseriti dall'utente
         $request->validate([
             'nome' => 'required|unique:pianificazione_produzione_testa,nome',
             'datainizio' => 'required'
@@ -157,6 +158,7 @@ class PianificazioneProduzioneTestaController extends Controller
             $descrizione = empty($request['descrizione']) ? '' : $request['descrizione'];
             $dataInizio = $request['datainizio'];
 
+            //salvataggio Record Testa Pianificazione Produzione (tabella: pianificazione_produzione_testa)
             $pianificazioneProduzioneTesta = new PianificazioneProduzioneTesta();
             $pianificazioneProduzioneTesta->nome = $nome;
             $pianificazioneProduzioneTesta->descrizione = $descrizione;
@@ -166,10 +168,10 @@ class PianificazioneProduzioneTestaController extends Controller
 
             $pianificazioneId = $pianificazioneProduzioneTesta->id;
 
-            //lancio procedura calcolo pianificazione produzione, ottengo la struttura dati da persistere a db
+            //procedura calcolo pianificazione produzione, ottengo la struttura dati da persistere a db
             $macchine = $this->proceduraCreaPianificazione($dataInizio);
 
-            //persisto la struttura dati su db nelle tabelle pianificazione_produzione_macchina e pianificazione_produzione_ordine
+            //salvataggio struttura dati su db nelle tabelle pianificazione_produzione_macchina e pianificazione_produzione_ordine
             $this->persistDataPianificazioneProduzione($pianificazioneId, $macchine);
 
             $request->session()->flash('status', 'Pianificazione Produzione creata correttamente');
@@ -189,13 +191,15 @@ class PianificazioneProduzioneTestaController extends Controller
      * @throws \Exception
      */
     protected function proceduraCreaPianificazione($dataInizioProduzione) {
-        $macchine = $this->readMacchine(); //questo array verrà modificato per tenere traccia della proceduara di calcolo della pianificazione
-        $ordiniAperti = $this->readOrdiniAperti(); //array contenente gli ordini aperti da schedulare sulle macchine
+        //questo array verrà modificato per tenere traccia della proceduara di calcolo della pianificazione
+        $macchine = $this->readMacchine();
+        //array contenente gli ordini aperti da schedulare sulle macchine
+        $ordiniAperti = $this->readOrdiniAperti();
 
         //scandisco tutti gli ordini di produzione aperti per allocarli alle macchine disponibili
         foreach ($ordiniAperti as $ordineAperto) {
             //ottengo l'indice della macchina più scarica compatibile con il prodotto che si vuole produrre
-            $macchinaIndex = $this->getMacchinaIndexConMinimoTempoUtilizzoETipoMacchinaAdeguato($ordineAperto['tipomacchina_id'], $macchine);
+            $macchinaIndex = $this->getMacchinaIndexCompatibile($ordineAperto['tipomacchina_id'], $macchine);
             //se non esiste una macchina alla quale assegnare un ordine di produzione tengo traccia dell'errore
             if ($macchinaIndex === false) {
                 $this->erroreProcedura = true;
@@ -208,7 +212,10 @@ class PianificazioneProduzioneTestaController extends Controller
             }
 
             //assegnare ordine produzione alla macchina e aggiornare tempo produzione
-            $dataFine = $this->getDataFineOrdine($dataInizioProduzione, $macchine[$macchinaIndex]['tempoutilizzo'] + $ordineAperto['ordineproduzione_tempoproduzione']);
+            $dataFine = $this->getDataFineOrdine(
+                $dataInizioProduzione,
+                $macchine[$macchinaIndex]['tempoutilizzo'] + $ordineAperto['ordineproduzione_tempoproduzione']
+            );
             $macchine[$macchinaIndex]['tempoutilizzo'] = $macchine[$macchinaIndex]['tempoutilizzo'] + $ordineAperto['ordineproduzione_tempoproduzione'];
             $macchine[$macchinaIndex]['ordiniproduzione'][] = [
                 'numeroordine' => $ordineAperto['ordineproduzione_numerordine'],
@@ -349,7 +356,7 @@ class PianificazioneProduzioneTestaController extends Controller
      * @param $macchine
      * @return false|int|string
      */
-    protected function getMacchinaIndexConMinimoTempoUtilizzoETipoMacchinaAdeguato($tipoMacchinaId, array $macchine) {
+    protected function getMacchinaIndexCompatibile($tipoMacchinaId, array $macchine) {
         $tempoMinimo = false;
         $macchinaIndex = false;
         foreach ($macchine as $index => $macchina) {
