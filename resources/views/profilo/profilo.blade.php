@@ -41,6 +41,7 @@
         </div>
     </form>
 
+    <br><br><br>
     <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3">
         <h3>Modifica Nome / Email</h3>
     </div>
@@ -56,7 +57,7 @@
         </div>
         <div class="form-group col-3">
             <label for="updateConfirmPassword">Conferma Password: </label>
-            <input type="text" name="updateConfirmPassword" id="updateConfirmPassword" class="form-control @if($errors->has('email')) is-invalid @endif">
+            <input type="password" name="updateConfirmPassword" id="updateConfirmPassword" class="form-control @if($errors->has('email')) is-invalid @endif">
             <span class="text-danger">
                 <strong id="update-confirm-password-error"></strong>
             </span>

@@ -69,7 +69,7 @@ class ProfiloController extends Controller
             }
             $user->update();
 
-            request()->session()->flash('status', 'Utente modificato correttamente');
+            request()->session()->flash('status', 'Password modificata correttamente');
         } catch (\Exception $e) {
             return new JsonResponse(['errors' => $e->errorInfo[2]]);
         }
