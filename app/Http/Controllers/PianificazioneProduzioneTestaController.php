@@ -336,7 +336,7 @@ class PianificazioneProduzioneTestaController extends Controller
             )
             ->where('stato', '=', OrdineProduzione::STATO_APERTO)
             ->orderBy('datascadenza', 'asc')
-            ->orderBy('tempoproduzione','desc')
+            ->orderBy('tempoproduzione','asc')
             ->get();
 
         $ordiniAperti = $ordiniAperti->toArray();
