@@ -1,0 +1,29 @@
+version: '2'
+services:
+  webserver:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "8080:80"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+  db:
+    image: mysql:5.7
+    ports:
+      - "3388:3306"
+    volumes:
+      - ./_data/db:/var/lib/database
+    environment:
+      MYSQL_DATABASE: production_scheduler
+      MYSQL_ROOT_PASSWORD: admin
+  redis:
+    image: redis
+    volumes:
+      - ./_data/redis:/data
