@@ -33,7 +33,7 @@
         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#createUtenteModal">Nuovo Utente</a>
     </div>
     <div class="table-responsive rounded">
-        <table id="utenteTable" class="table table-striped table-hover display">
+        <table id="utenteTable" class="table table-striped table-hover display" style="width: 100%">
             <thead>
             <tr>
                 <th hidden></th> {{-- aggiunto per poter togliere l'ordinamento dalla prima colonna --}}
